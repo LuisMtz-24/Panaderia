@@ -5,8 +5,8 @@ var app=express()
 var con=mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'root',
-    database:'5IV8'
+    password:'1t4k3rm3t4l$',
+    database:'Ejemplo'
 })
 con.connect();
 
@@ -18,18 +18,15 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'))
 
 app.post('/agregarUsuario',(req,res)=>{
-        let nombre=req.body.nombre
-        let id=req.body.id
+    let nombre = req.body.nombre;
 
-        con.query('INSERT INTO usuario (id_usuario, nombre) VALUES (?, ?)', [id, nombre], (err, respuesta, fields) => {
-            if (err) {
-                console.log("Error al conectar", err);
-                return res.status(500).send("Error al conectar");
-            }
-           
-            return res.send(`<h1>Nombre:</h1> ${nombre}`);
-        });
-   
+    con.query('INSERT INTO usuario (nombre) VALUES (?)', [nombre], (err, respuesta) => {
+        if (err) {
+            console.log("Error al insertar", err);
+            return res.status(500).send("Error al insertar usuario");
+        }
+        return res.send(`<h1>Usuario agregado:</h1> ${nombre}`);
+    });
 })
 
 app.listen(10000,()=>{
@@ -66,17 +63,43 @@ app.get('/obtenerUsuario',(req,res)=>{
 });
 
 app.post('/borrarUsuario', (req, res) => {
-    const id = req.body.id; // El ID del usuario a eliminar viene en el cuerpo de la solicitud
-    console.log("hola")
-    con.query('DELETE FROM usuario WHERE id_usuario = ?', [id], (err, resultado, fields) => {
+    console.log("BODY:", req.body); // Para depuración
+    const nombre = req.body.nombre.trim();
 
-        if (err) {
-            console.error('Error al borrar el usuario:', err);
-            return res.status(500).send("Error al borrar el usuario");
+    con.query(
+        'DELETE FROM usuario WHERE TRIM(LOWER(nombre)) = TRIM(LOWER(?))',
+        [nombre],
+        (err, resultado) => {
+            if (err) {
+                console.error('Error al borrar el usuario:', err);
+                return res.status(500).send("Error al borrar el usuario");
+            }
+            if (resultado.affectedRows === 0) {
+                return res.status(404).send("Usuario no encontrado");
+            }
+            return res.send(`Usuario con nombre "${nombre}" borrado correctamente`);
         }
-        if (resultado.affectedRows === 0) {
-            return res.status(404).send("Usuario no encontrado");
+    );
+});
+
+
+
+app.post('/actualizarUsuario', (req, res) => {
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+
+    con.query(
+        'UPDATE usuario SET nombre = ? WHERE id_usuario = ?',
+        [nombre, id],
+        (err, resultado) => {
+            if (err) {
+                console.error('Error al actualizar usuario:', err);
+                return res.status(500).send("Error al actualizar usuario");
+            }
+            if (resultado.affectedRows === 0) {
+                return res.status(404).send("Usuario no encontrado");
+            }
+            return res.send(`Usuario con ID ${id} actualizado correctamente a "${nombre}"`);
         }
-        return res.send(`Usuario con ID ${id} borrado correctamente`);
-    });
+    );
 });

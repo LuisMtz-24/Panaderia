@@ -1,12 +1,30 @@
 {
   "dependencies": {
-    "express": "^4.21.0",
-    "mysql2": "^3.11.3"
+    "body-parser": "^2.2.0",
+    "express": "^4.21.2",
+    "mysql2": "^3.15.1"
   },
   "devDependencies": {
+    "@web/dev-server": "^0.4.6",
     "nodemon": "^3.1.7"
   },
   "scripts": {
-    "start": "nodemon app.js"
-  }
+    "start": "nodemon app.js",
+    "iniciar": "wds --root ./CRUD-NODE"
+  },
+  "name": "crud-node",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almaevs/Crud-node.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/almaevs/Crud-node/issues"
+  },
+  "homepage": "https://github.com/almaevs/Crud-node#readme",
+  "description": ""
 }
