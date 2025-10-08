@@ -3,10 +3,10 @@ const mysql= require("mysql2")
 var bodyParser=require('body-parser')
 var app=express()
 var con=mysql.createConnection({
-    host:'localhost',
+    host:'tramway.proxy.rlwy.net:52463',
     user:'root',
-    password:'1t4k3rm3t4l$',
-    database:'Ejemplo'
+    password:'TjaZprBUqjXhNXihYezGiNZyRywSIGKS',
+    database:'Pan'
 })
 con.connect();
 
