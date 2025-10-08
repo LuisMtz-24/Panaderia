@@ -5,7 +5,7 @@ var app=express()
 var con=mysql.createConnection({
     host:'tramway.proxy.rlwy.net:52463',
     user:'root',
-    password:'http://tramway.proxy.rlwy.net',
+    password:'TjaZprBUqjXhNXihYezGiNZyRywSIGKS',
     database:'Pan'
 })
 con.connect();
