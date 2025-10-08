@@ -7,7 +7,7 @@ var con=mysql.createConnection({
     port: 52463,
     user:'root',
     password:'TjaZprBUqjXhNXihYezGiNZyRywSIGKS',
-    database:'Pan'
+    database:'pan'
 })
 con.connect();
 
